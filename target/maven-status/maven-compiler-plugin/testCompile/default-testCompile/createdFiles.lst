@@ -1,0 +1,5 @@
+RijksmuseumAPI\page\CollectionDetailAPI.class
+RijksmuseumAPI\stepdefs\StepDefs.class
+RijksmuseumAPI\page\CollectionImageAPI.class
+RijksmuseumAPI\page\CollectionAPI.class
+RijksmuseumAPI\stepdefs\TestRunner.class
