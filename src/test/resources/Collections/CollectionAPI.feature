@@ -1,7 +1,7 @@
 #Author: Shankaragouda Patil
 @smoke
 Feature: Rijksmuseum Collection APIs Test
-@test1
+
   Scenario: TestCase-1 Verify HTTP 200 Response for Collection API for Rijksmuseum with valid API Key
     Given CollectionAPI resource url
       | RESOURCE URL | /api/nl/collection?key=0fiuZFh4&involvedMaker=Rembrandt van Rijn |
