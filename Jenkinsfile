@@ -1,30 +1,30 @@
 pipeline {
-	agent any
-	environment {
-        MAVEN_HOME = tool 'maven_home'
+    agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "maven_home"
     }
-	stages {
-		stage('checkout') {
-			steps {
-				checkout 'https://github.com/shankar86/RijksmuseumAPI-Assignment2.git'
-			}
-		}
-		stage('Build') {
-			steps {
-				sh "${MAVEN_HOME}/bin/mvn clean compile"
-			}
-		}
-		stage('Test') {
-			steps {
-				sh "${MAVEN_HOME}/bin/mvn install -Dcucumber.filter.tags='@smoke'"
-			}
-		}
-		stage('Report') {
+     parameters {
+        string(name: 'CUCUMBER_TAGS', defaultValue: '@smoke', description: 'Cucumber tags to run')
+    }
+
+    stages {
+        stage('checkout') {
             steps {
-                cucumber buildStatus: 'UNSTABLE', reportTitle: 'Cucumber Report', fileIncludePattern: '**/target/cucumber-reports/*.json'
+                // Get some code from a GitHub repository
+                git branch: 'main', url: 'https://github.com/shankar86/RijksmuseumAPI-Assignment2.git'
             }
-	}
-	post {
+		}
+		stage('Build and Test') {
+			steps {
+			    withEnv(["cucumber.options=${params.CUCUMBER_TAGS}"]) {
+				bat "mvn clean install"
+			    }
+			}
+		}   
+		}
+		post {
         always {
             // Cleanup and notifications
             junit '**/target/surefire-reports/*.xml' // Collect test results
