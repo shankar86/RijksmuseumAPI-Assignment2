@@ -16,7 +16,7 @@ pipeline {
 		}
 		stage('Test') {
 			steps {
-				sh "${MAVEN_HOME}/bin/mvn install -Dcucumber.filter.tags="@smoke""
+				sh "${MAVEN_HOME}/bin/mvn install -Dcucumber.filter.tags='@smoke'"
 			}
 		}
 		stage('Report') {
