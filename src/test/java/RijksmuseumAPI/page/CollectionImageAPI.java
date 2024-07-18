@@ -3,6 +3,7 @@ package RijksmuseumAPI.page;
 import org.junit.Assert;
 
 import io.restassured.response.ValidatableResponse;
+import static org.hamcrest.Matchers.*;
 
 public class CollectionImageAPI {
 

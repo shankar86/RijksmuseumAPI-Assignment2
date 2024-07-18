@@ -1,11 +1,14 @@
 package RijksmuseumAPI.page;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Assert;
 
 import io.cucumber.datatable.DataTable;
@@ -70,7 +73,7 @@ public class CollectionAPI {
 	}
 
 	public static void verifyResponseBody(String responseBodyValue) {
-		
+
 		Assert.assertTrue(responseBodyValue + " Value is Not Available in Collection API Response Body",
 				responseBody.contains(responseBodyValue));
 	}
@@ -78,12 +81,19 @@ public class CollectionAPI {
 	public static void verifyResponseBodyDetails(String string, String string2) {
 
 		ValidatableResponse responseBodyDetails = response.then();
-		if (string2.equals("SK-A-4050")) {
-			responseBodyDetails.assertThat().body("artObjects[0].links.self", equalTo(string));
-			responseBodyDetails.assertThat().body("artObjects[0].objectNumber", equalTo(string2));
-		} else if (string2.equals("SK-A-4691")) {
-			responseBodyDetails.assertThat().body("artObjects[1].links.self", equalTo(string));
-			responseBodyDetails.assertThat().body("artObjects[1].objectNumber", equalTo(string2));
+		List<Object> artObjects = responseBodyDetails.extract().body().jsonPath().getList("artObjects");
+		int objectSize = artObjects.size();
+		JSONArray jsonArray = new JSONArray(artObjects);
+		for (int i = 0; i < objectSize; i++) {
+			Assert.assertTrue(artObjects + " Value is Not Available in Collection API Response Body",
+					artObjects.get(i).toString().contains("objectNumber"));
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			//String objectNumber = jsonObject.getString("objectNumber");
+			//System.out.println("objectNumber: " + objectNumber);
+			if (jsonObject.getString("objectNumber").toString().equals(string2)) {
+				responseBodyDetails.assertThat().body("artObjects[" + i + "].links.self", equalTo(string));
+				responseBodyDetails.assertThat().body("artObjects[" + i + "].objectNumber", equalTo(string2));
+			}
 		}
 		System.out.println("Validation Completed");
 	}

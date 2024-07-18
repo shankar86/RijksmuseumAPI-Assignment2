@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: RijksmuseumAPI.stepdefs.TestRunner
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.368 s - in RijksmuseumAPI.stepdefs.TestRunner
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.048 s - in RijksmuseumAPI.stepdefs.TestRunner
