@@ -95,7 +95,7 @@ public class CollectionAPI {
 				responseBodyDetails.assertThat().body("artObjects[" + i + "].objectNumber", equalTo(string2));
 			}
 		}
-		System.out.println("Validation Completed");
+		System.out.println("Validation Completed.");
 	}
 
 }
